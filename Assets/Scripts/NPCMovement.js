@@ -32,26 +32,6 @@ function clearTarget() {
 }
 
 function Update () {
-	if(stats.onFire()){
-		gameObject.renderer.material.color = Color.red;
-		stats.hurtHealth(1);
-		if(stats.getHealth() <= 0)
-			gameObject.renderer.material.color = Color.black;
-		
-		//Run Away
-		var HeroVector = (GameObject.Find("Sidekick").transform.position - gameObject.transform.position);
-		var angle = Mathf.Atan(HeroVector.y / HeroVector.x) + Mathf.PI;
-		if(HeroVector.x < 0)
-			angle = angle + Mathf.PI;
-		angle = angle + (Random.value - 0.5) * Mathf.PI;
-		target = gameObject.transform.position + Vector3(Mathf.Cos(angle) * 2, Mathf.Sin(angle) * 2, 0);
-		hasTarget = true;
-		
-		
-	}
-	else
-		gameObject.renderer.material.color = Color.white;
-	
 	if(hasTarget) {
 		var move : Vector3;
 		move = Vector3.MoveTowards(transform.position, target, stats.getMoveSpeed() * Time.deltaTime) - transform.position;

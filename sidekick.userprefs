@@ -1,10 +1,12 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\SidekickMovement.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\BehaviorImplMob.js">
     <Files>
-      <File FileName="Assets\Scripts\SidekickMovement.js" Line="37" Column="20" />
-      <File FileName="Assets\Scripts\Stats.js" Line="83" Column="18" />
-      <File FileName="Assets\Scripts\NPCMovement.js" Line="39" Column="53" />
+      <File FileName="Assets\Scripts\SidekickMovement.js" Line="55" Column="12" />
+      <File FileName="Assets\Scripts\Stats.js" Line="32" Column="58" />
+      <File FileName="Assets\Scripts\Behavior.js" Line="117" Column="2" />
+      <File FileName="Assets\Scripts\BehaviorImplMob.js" Line="86" Column="4" />
+      <File FileName="Assets\Scripts\BehaviorImplNPC.js" Line="67" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
