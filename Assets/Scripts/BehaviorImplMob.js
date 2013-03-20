@@ -4,9 +4,10 @@
 class MobBehavior extends NPCBehavior {
 	
 	// special states
-	var onFire : boolean = false;
-	var frozen : boolean = false;
-
+	var timeSinceTarget : double = 0;
+	var onFire : double = 0;
+	var frozen : double = 0;
+	
 	function MobBehavior(go : GameObject) {
 		super(go);
 		// Used this to spice things up while sight/patrolling is unimplemented
@@ -67,8 +68,11 @@ class MobBehavior extends NPCBehavior {
 		CheckAggroRange();
 		
 		// on fire behavior
-		if (onFire) {
-		
+		if (onFire > 0) {
+			onFire -= Time.deltaTime;
+			timeSinceTarget -= Time.deltaTime;
+			gameObject.renderer.material.color = Color.yellow;
+			
 			// run away from hero
 			var HeroVector = (GameObject.Find("Hero").transform.position - gameObject.transform.position);
 			var angle = Mathf.Atan(HeroVector.y / HeroVector.x) + Mathf.PI;
@@ -76,11 +80,17 @@ class MobBehavior extends NPCBehavior {
 				angle = angle + Mathf.PI;
 			}
 			angle = angle + (Random.value - 0.5) * Mathf.PI;
-			super.movement.setTarget(gameObject.transform.position + Vector3(Mathf.Cos(angle) * 2, Mathf.Sin(angle) * 2, 0));
+			if(timeSinceTarget < 0)
+			{
+				timeSinceTarget = 0.25;
+				super.movement.setTarget(gameObject.transform.position + Vector3(Mathf.Cos(angle) * 2, Mathf.Sin(angle) * 2, 0));
+			}
 		}
 		
 		// frozen behavior
-		else if (frozen) {
+		else if (frozen > 0) {
+			gameObject.renderer.material.color = Color.cyan;
+			frozen -= Time.deltaTime;
 			// just frozen, so it should just sit there....
 			// Clear the target
 			super.ClearTarget();
@@ -88,34 +98,31 @@ class MobBehavior extends NPCBehavior {
 		
 		// normal behavior
 		else {
-		
+			gameObject.renderer.material.color = Color.blue;
+
 			// NPCBehavior will move me closer to my target if I have one
 			super.Update();
 		}
 	}
 	
 	function FireSpell() {
-		if (onFire) {
-			gameObject.renderer.material.color = Color.magenta;
-			onFire = false;
+		if (onFire > 0) {
+			onFire = 0;
 		}
 		else {
 			// visibily aflame
-			gameObject.renderer.material.color = Color.yellow;
-			onFire = true;
-			frozen = false; // you can only be one or the other
+			onFire = 3;
+			frozen = 0; // you can only be one or the other
 		}
 	}
 	
 	function IceSpell() {
-		if (frozen) {
-			gameObject.renderer.material.color = Color.blue;
-			frozen = false;
+		if (frozen > 0) {
+			frozen = 0;
 		}
 		else {
-			gameObject.renderer.material.color = Color.cyan;
-			frozen = true;
-			onFire = false; // you can only be one or the other
+			frozen = 3;
+			onFire = 0; // you can only be one or the other
 		}
 	}
 
